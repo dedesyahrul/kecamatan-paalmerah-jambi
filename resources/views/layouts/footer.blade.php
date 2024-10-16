@@ -19,11 +19,9 @@
                             class="rounded" target="_blank"><i data-feather="instagram"
                                 class="fea icon-sm fea-social"></i></a>
                     </li>
-                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i
-                                data-feather="instagram" class="fea icon-sm fea-social"></i></a></li>
                     <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="twitter"
                                 class="fea icon-sm fea-social"></i></a></li>
-                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="linkedin"
+                    <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i data-feather="youtube"
                                 class="fea icon-sm fea-social"></i></a></li>
                 </ul><!--end icon-->
                 <div>
