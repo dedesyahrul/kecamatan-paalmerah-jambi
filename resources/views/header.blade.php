@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ $identitasWebsites->nama_website }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{{ $identitasWebsites->meta_deskripsi }}" />
     <meta name="keywords" content="{{ $identitasWebsites->meta_keyword }}" />
     <meta name="author" content="DedeSyahrul" />
@@ -358,7 +358,6 @@
         <div class="container">
             <!-- Logo container-->
             <a class="logo" href="{{ route('index') }}">
-
                 <span class="logo-light-mode">
                     <img src="{{ asset('storage/' . $identitasWebsites->logo_dark) }}" class="l-dark" height="50"
                         alt="{{ $identitasWebsites->nama_website }}">
@@ -367,7 +366,6 @@
                 </span>
                 <img src="{{ asset('storage/' . $identitasWebsites->logo_light) }}" height="50"
                     class="logo-dark-mode" alt="{{ $identitasWebsites->nama_website }}">
-
             </a>
             {{-- <div class="buy-button">
                 <a href="https://1.envato.market/4n73n" target="_blank" class="btn btn-primary">Buy Now</a>
@@ -395,6 +393,9 @@
         </div><!--end container-->
     </header><!--end header-->
     <!-- Navbar End -->
+
+
+    @yield('content')
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -424,24 +425,97 @@
         });
     </script>
 
+
+    <style>
+        /* Aturan umum */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+
+
+        /* Responsive styles */
+        @media (max-width: 991px) {
+            #navigation {
+                position: fixed;
+                top: 60px;
+                /* Sesuaikan dengan tinggi navbar */
+                left: 0;
+                right: 0;
+                background-color: #ffffff;
+                max-height: calc(100vh - 60px);
+                overflow-y: auto;
+                display: none;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            #navigation.show {
+                display: block;
+            }
+
+            body {
+                padding-top: 60px;
+                /* Sesuaikan dengan tinggi navbar */
+            }
+
+            /* Penyesuaian untuk slider/carousel */
+            .carousel-item,
+            .swiper-slide {
+                width: 100vw !important;
+            }
+
+            /* Penyesuaian untuk gambar latar belakang */
+            .bg-image {
+                background-size: cover;
+                background-position: center;
+            }
+        }
+
+        /* Tambahan untuk menghindari overflow horizontal */
+        .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        [class*="col-"] {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    </style>
+
     <script>
-        $(document).ready(function() {
-            $('.owl-carousel').owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 2
-                    }
-                }
-            });
+        function toggleMenu() {
+            var navigation = document.getElementById('navigation');
+            navigation.classList.toggle('show');
+        }
+
+        // Menutup menu saat mengklik di luar area menu
+        document.addEventListener('click', function(event) {
+            var navigation = document.getElementById('navigation');
+            var isClickInsideNavigation = navigation.contains(event.target);
+            var isClickInsideToggle = document.getElementById('isToggle').contains(event.target);
+
+            if (!isClickInsideNavigation && !isClickInsideToggle && window.innerWidth <= 991) {
+                navigation.classList.remove('show');
+            }
+        });
+
+        // Menyesuaikan tampilan saat resize window
+        window.addEventListener('resize', function() {
+            var navigation = document.getElementById('navigation');
+            if (window.innerWidth > 991) {
+                navigation.style.display = 'block';
+            } else {
+                navigation.style.display = 'none';
+            }
         });
     </script>
 
