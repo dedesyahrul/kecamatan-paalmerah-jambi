@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ProfilPkk;
 use App\SejarahPkk;
-use App\VisimisiPkk;
+use App\VisiMisiPkk;
 use App\PaudPkk;
 use App\KegiatanPkk;
 use App\PrestasiPkk;
@@ -30,7 +30,7 @@ class PkkController extends Controller
 
     public function indexVisimisiPkk()
     {
-        $visimisiPkk = VisimisiPkk::all();
+        $visimisiPkk = VisiMisiPkk::all();
         return view('frontend.pkk.visimisi-pkk', compact('visimisiPkk'));
     }
 
