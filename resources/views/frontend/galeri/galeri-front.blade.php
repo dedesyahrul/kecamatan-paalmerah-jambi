@@ -1,15 +1,15 @@
 <div class="container mt-100 mt-60">
     <div class="row align-items-center mb-5">
-        <div class="col-lg-8">
-            <div class="section-title text-center text-lg-start">
+        <div class="col-lg-8 col-md-7">
+            <div class="section-title text-center text-md-start">
                 <h4 class="mb-4">Galeri Foto Kegiatan</h4>
                 <p class="text-muted mb-0 para-desc">Nikmati momen-momen berharga dalam galeri foto kegiatan kami, yang
                     merefleksikan semangat dan dedikasi kami dalam setiap langkah.</p>
             </div>
         </div><!--end col-->
 
-        <div class="col-lg-4 mt-4 mt-lg-0">
-            <div class="text-center text-lg-end">
+        <div class="col-lg-4 col-md-5 mt-4 mt-md-0">
+            <div class="text-center text-md-end">
                 <a href="{{ route('indexFoto') }}" class="btn btn-soft-primary">
                     Lihat Lebih Banyak
                     <i data-feather="arrow-right" class="fea icon-sm ms-1"></i>
@@ -20,7 +20,7 @@
 
     <div class="row g-4">
         @foreach ($fotos as $foto)
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <article class="photo-card hover-lift h-100">
                     <div class="photo-card__image-wrapper">
                         @php
@@ -51,13 +51,14 @@
 
 <style>
     .row.g-4 {
-        margin-left: -15px;
-        margin-right: -15px;
+        margin-left: -10px;
+        margin-right: -10px;
     }
 
     .row.g-4>[class*="col-"] {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-bottom: 20px;
     }
 
     .photo-card {
@@ -98,14 +99,14 @@
     }
 
     .photo-card__content {
-        padding: 20px;
+        padding: 15px;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
     }
 
     .photo-card__title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 700;
         margin-bottom: 10px;
         line-height: 1.3;
@@ -160,9 +161,32 @@
         transform: translateX(5px);
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
         .photo-card__title {
-            font-size: 1.1rem;
+            font-size: 1rem;
+        }
+
+        .photo-card__content {
+            padding: 12px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .section-title {
+            text-align: center;
+        }
+
+        .btn-soft-primary {
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .photo-card__image-wrapper {
+            padding-top: 75%;
+            /* 4:3 Aspect Ratio for smaller screens */
         }
     }
 </style>

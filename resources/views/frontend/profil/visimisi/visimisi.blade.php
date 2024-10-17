@@ -67,8 +67,10 @@
                                             {{ \Carbon\Carbon::parse($vm->created_at)->translatedFormat('l, d F Y') }}
                                         </li>
                                     </ul>
-                                    <img src="{{ asset('storage/' . $vm->fotovisimisi) }}"
-                                        class="img-fluid rounded-md shadow" alt="">
+                                    @if ($vm->fotovisimisi && Storage::disk('public')->exists($vm->fotovisimisi))
+                                        <img src="{{ asset('storage/' . $vm->fotovisimisi) }}"
+                                            class="img-fluid rounded-md shadow mb-4" alt="Visi Misi PKK">
+                                    @endif
                                     <p class="text-muted">{{ $vm->keterangan }}</p>
                                 </div>
                             </div>

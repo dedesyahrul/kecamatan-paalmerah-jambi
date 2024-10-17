@@ -1,145 +1,184 @@
-@include('header')
+@extends('layouts.app')
 
-<section class="bg-half bg-light d-table w-100">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12 text-center">
-                <div class="page-next-level">
-                    <h4 class="title"> Hasil Pencarian </h4>
-                    <div class="page-next">
-                        <nav aria-label="breadcrumb" class="d-inline-block">
-                            <ul class="breadcrumb bg-white rounded shadow mb-0">
-                                <li class="breadcrumb-item"><a href="/">Beranda</a></li>
-                            </ul>
-                        </nav>
+@section('title', 'Pencarian | Official Website Kecamatan Paal Merah | Pemerintah Kota Jambi')
+
+@section('hero')
+    <section class="bg-half d-table w-100" style="background: url('{{ asset('assets') }}/images/tugu_keris.jpg');">
+        <div class="bg-overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12 text-center">
+                    <div class="page-next-level title-heading">
+                        <h1 class="text-white title-dark"> Pencarian </h1>
+                        <div class="page-next">
+                            <nav aria-label="breadcrumb" class="d-inline-block">
+                                <ul class="breadcrumb bg-white rounded shadow mb-0">
+                                    <li class="breadcrumb-item"><a href="/">Beranda</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Pencarian</li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </div><!--end col-->
+            </div><!--end row-->
+        </div> <!--end container-->
+    </section><!--end section-->
+    <div class="position-relative">
+        <div class="shape overflow-hidden text-white">
+            <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
+            </svg>
         </div>
     </div>
-</section>
+@endsection
 
-<!-- Shape Start -->
-<div class="position-relative">
-    <div class="shape overflow-hidden text-white">
-        <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
-        </svg>
-    </div>
-</div>
-<!--Shape End-->
-<section class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-6">
-                <h1>Hasil Pencarian untuk: {{ $query }}</h1>
-                @if ($beritas->isEmpty() && $agendas->isEmpty() && $pengumumans->isEmpty())
-                    <div class="text-center mt-4">
-                        <img src="{{ asset('assets/images/undraw_not_found_re_bh2e.svg') }}"
-                            alt="Tidak ada hasil ditemukan" class="img-fluid" style="max-width: 400px;">
-                        <p>Tidak ada hasil ditemukan.</p>
-                    </div>
-                @else
-                    @if (!$beritas->isEmpty())
-                        <h2>Berita</h2>
-                        <hr>
-                        <div class="row">
-                            @foreach ($beritas as $berita)
-                                <div class="col-lg-6 col-12 mb-4 pb-2">
-                                    <div class="card blog rounded border-0 shadow overflow-hidden">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-md-6 order-2 order-md-1">
-                                                <div class="card-body content">
-                                                    <h5>
-                                                        <a href="{{ route('berita.show', $berita->id) }}"
-                                                            class="card-title title text-dark">{{ Str::limit($berita->judul, 30, '...') }}</a>
-                                                    </h5>
-                                                    <p class="text-muted mb-0">
-                                                        {{ Str::limit(strip_tags($berita->isi_berita), 20) }}</p>
-                                                    <div class="post-meta d-flex justify-content-between mt-3">
-                                                        <a href="{{ route('berita.show', $berita->id) }}"
-                                                            class="text-muted readmore">Selengkapnya <i
-                                                                class="uil uil-angle-right-b align-middle"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 order-1 order-md-2">
-                                                <div class="img-crop">
-                                                    <img src="{{ asset('storage/' . $berita->foto) }}" class="img-fluid"
-                                                        alt="">
-                                                </div>
-                                                <div class="overlay bg-dark"></div>
-                                                <div class="author">
-                                                    <small class="text-light user d-block"><i class="uil uil-user"></i>
-                                                        {{ $berita->headline }}</small>
-                                                    <small class="text-light date"><i
-                                                            class="uil uil-calendar-alt"></i>{{ \Carbon\Carbon::parse($berita->created_at)->translatedFormat('l, d F Y') }}</small>
-                                                </div>
-                                            </div>
+@section('content')
+    <section class="section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <h1 class="mb-4">Hasil Pencarian untuk: "{{ $query }}"</h1>
+
+                    @if ($beritas->isEmpty())
+                        <div class="text-center mt-5">
+                            <img src="{{ asset('assets/images/undraw_not_found_re_bh2e.svg') }}"
+                                alt="Tidak ada hasil ditemukan" class="img-fluid mb-4" style="max-width: 300px;">
+                            <h3 class="text-muted">Tidak ada hasil ditemukan.</h3>
+                            <p class="text-muted">Coba kata kunci lain atau periksa ejaan Anda.</p>
+                        </div>
+                    @else
+                        <p class="text-muted mb-4">Ditemukan {{ $beritas->total() }} hasil</p>
+
+                        @foreach ($beritas as $berita)
+                            <div class="card border-0 shadow-sm mb-4">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="{{ asset('storage/' . $berita->foto) }}"
+                                            class="img-fluid rounded-start h-100 object-fit-cover"
+                                            alt="{{ $berita->judul }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-2">
+                                                <a href="{{ route('berita.show', $berita->id) }}"
+                                                    class="text-dark text-decoration-none">
+                                                    {{ Str::limit($berita->judul, 60) }}
+                                                </a>
+                                            </h5>
+                                            <p class="card-text text-muted small mb-2">
+                                                <i class="fas fa-calendar-alt me-2"></i>
+                                                {{ \Carbon\Carbon::parse($berita->created_at)->translatedFormat('d F Y') }}
+                                            </p>
+                                            <p class="card-text">{{ Str::limit(strip_tags($berita->isi_berita), 100) }}</p>
+                                            <a href="{{ route('berita.show', $berita->id) }}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                Baca Selengkapnya
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
-                    @endif
+                            </div>
+                        @endforeach
 
-                    @if (!$agendas->isEmpty())
-                        <h2>Agenda</h2>
-                        <hr>
-                        <ul class="list-group">
-                            @foreach ($agendas as $agenda)
-                                <li class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-2">
-                                            <div class="card text-center bg-light shadow-sm">
-                                                <div class="bg-info text-white p-2 rounded">
-                                                    <h5 class="card-title mb-0">
-                                                        {{ \Carbon\Carbon::parse($agenda->tanggal)->format('d') }}</h5>
-                                                    <small>{{ \Carbon\Carbon::parse($agenda->tanggal)->format('M Y') }}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <h5 class="card-title">{{ $agenda->agenda }}</h5>
-                                            <small class="text-muted">{{ $agenda->waktu }} -
-                                                {{ $agenda->tempat }}</small>
-                                            <p class="mb-1">{{ $agenda->perihal }}</p>
-                                            <a href="{{ route('agenda.show', Crypt::encrypt($agenda->id)) }}"
-                                                class="btn btn-primary">Detail</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                        @if ($beritas->hasPages())
+                            <nav aria-label="Page navigation" class="mt-4">
+                                <ul class="pagination justify-content-center">
+                                    {{-- Previous Page Link --}}
+                                    @if ($beritas->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link">&laquo;</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $beritas->previousPageUrl() }}"
+                                                rel="prev">&laquo;</a>
+                                        </li>
+                                    @endif
 
-                    @if (!$pengumumans->isEmpty())
-                        <h2>Pengumuman</h2>
-                        <hr>
-                        <ul class="list-group">
-                            @foreach ($pengumumans as $pengu)
-                                <li class="list-group-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-9">
-                                            <h5 class="card-title">{{ $pengu->judul }}</h5>
-                                            <small>{{ \Carbon\Carbon::parse($pengu->created_at)->format('d M Y H:i') }}</small>
-                                            <p class="card-text">
-                                                {{ Str::limit(strip_tags($pengu->isi_pengumuman), 100) }}</p>
-                                        </div>
-                                        <div class="col-md-3 text-md-end">
-                                            <a href="{{ route('pengumuman.show', Crypt::encrypt($pengu->id)) }}"
-                                                class="btn btn-primary">Detail</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ul>
+                                    {{-- Pagination Elements --}}
+                                    @foreach ($beritas->getUrlRange(1, $beritas->lastPage()) as $page => $url)
+                                        @if ($page == $beritas->currentPage())
+                                            <li class="page-item active">
+                                                <span class="page-link">{{ $page }}</span>
+                                            </li>
+                                        @else
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+
+                                    {{-- Next Page Link --}}
+                                    @if ($beritas->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $beritas->nextPageUrl() }}"
+                                                rel="next">&raquo;</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link">&raquo;</span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </nav>
+                        @endif
+
+
                     @endif
-                @endif
+                </div>
+
+                @include('frontend.partials.sidebar-front')
             </div>
-
-            @include('frontend.partials.sidebar')
         </div>
-    </div>
-</section>
-@include('footer')
+    </section>
+
+    <style>
+        .pagination {
+            gap: 5px;
+        }
+
+        .page-item {
+            margin: 0 2px;
+        }
+
+        .page-link {
+            border: none;
+            color: #333;
+            background-color: #f8f9fa;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .page-item.active .page-link,
+        .page-link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #f8f9fa;
+        }
+    </style>
+
+    <style>
+        .card {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .object-fit-cover {
+            object-fit: cover;
+        }
+    </style>
+@endsection

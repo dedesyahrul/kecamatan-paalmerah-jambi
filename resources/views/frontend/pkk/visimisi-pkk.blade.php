@@ -69,10 +69,10 @@
                                     <div class="tinymce-content">
                                         {!! $visimisi->isi !!}
                                     </div>
-
-
-                                    <img src="{{ asset('storage/' . $visimisi->foto) }}"
-                                        class="img-fluid rounded-md shadow mb-4" alt="">
+                                    @if ($visimisi->foto && Storage::disk('public')->exists($visimisi->foto))
+                                        <img src="{{ asset('storage/' . $visimisi->foto) }}"
+                                            class="img-fluid rounded-md shadow mb-4" alt="Visi Misi PKK">
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

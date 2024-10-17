@@ -101,15 +101,6 @@ class HomeController extends Controller
                         ->orderBy('created_at', 'desc')
                         ->paginate(3);
 
-        $agendas = Agenda::where('agenda', 'LIKE', "%{$query}%")
-                        ->orWhere('perihal', 'LIKE', "%{$query}%")
-                        ->orderBy('created_at', 'desc')
-                        ->get();
-
-        $pengumumans = Pengumuman::where('judul', 'LIKE', "%{$query}%")
-                        ->orWhere('isi_pengumuman', 'LIKE', "%{$query}%")
-                        ->orderBy('created_at', 'desc')
-                        ->get();
         // Variabel lain yang diperlukan oleh view
         $sliders = Slider::all();
         $banner_standings = BannerStanding::all();
@@ -122,9 +113,9 @@ class HomeController extends Controller
         $aplikasi_terkait = AplikasiTerkait::all();
 
         return view('search_results', compact(
-            'beritas', 'agendas', 'query', 'sliders', 'banner_standings',
+            'beritas', 'query', 'sliders', 'banner_standings',
             'banners', 'sekre', 'b_egov', 'infokom', 'fotos',
-            'detailAplikasi', 'aplikasi_terkait', 'pengumumans'
+            'detailAplikasi', 'aplikasi_terkait'
         ));
     }
 
