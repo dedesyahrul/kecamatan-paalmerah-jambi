@@ -396,11 +396,21 @@
             <i class="fas fa-share-alt"></i>
         </button>
         <ul class="social-icons">
-            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#" class="instagram"><i class="fab fa-instagram"></i></a></li>
-            <li><a href="#" class="youtube"><i class="fab fa-youtube"></i></a></li>
-            <li><a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a></li>
+            @foreach ($socialMediaLinks as $socialMedia)
+                <li>
+                    @php
+                        $href = $socialMedia->link;
+                        if ($socialMedia->platform === 'whatsapp') {
+                            $cleanNumber = preg_replace('/[^0-9]/', '', $socialMedia->link);
+                            $href = "https://wa.me/{$cleanNumber}";
+                        }
+                    @endphp
+                    <a href="{{ $href }}" target="_blank" rel="noopener noreferrer"
+                        class="{{ $socialMedia->platform }}">
+                        <i class="fab fa-{{ $socialMedia->platform }}"></i>
+                    </a>
+                </li>
+            @endforeach
         </ul>
     </div>
 
@@ -427,7 +437,7 @@
 
         .main-button:hover {
             background-color: #0056b3;
-            transform: scale(1.1) rotate(360deg);
+            transform: scale(1.1);
         }
 
         .social-icons {
@@ -444,7 +454,7 @@
 
         .social-icons li {
             margin-bottom: 15px;
-            transform: translateY(20px);
+            transform: translateY(20px) scale(0.5);
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
@@ -493,28 +503,40 @@
         }
 
         .floating-social-menu.active .social-icons li {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
             opacity: 1;
         }
 
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         .floating-social-menu.active .social-icons li:nth-child(1) {
-            transition-delay: 0.1s;
+            animation: fadeInScale 0.3s 0.1s forwards;
         }
 
         .floating-social-menu.active .social-icons li:nth-child(2) {
-            transition-delay: 0.2s;
+            animation: fadeInScale 0.3s 0.2s forwards;
         }
 
         .floating-social-menu.active .social-icons li:nth-child(3) {
-            transition-delay: 0.3s;
+            animation: fadeInScale 0.3s 0.3s forwards;
         }
 
         .floating-social-menu.active .social-icons li:nth-child(4) {
-            transition-delay: 0.4s;
+            animation: fadeInScale 0.3s 0.4s forwards;
         }
 
         .floating-social-menu.active .social-icons li:nth-child(5) {
-            transition-delay: 0.5s;
+            animation: fadeInScale 0.3s 0.5s forwards;
         }
 
         @keyframes pulse {

@@ -19,6 +19,7 @@ use App\LayananDukcapil;
 use App\LayananPaten;
 use App\IdentitasWebsite;
 use App\Weblink;
+use App\SocialMediaLink;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -62,7 +63,7 @@ class AppServiceProvider extends ServiceProvider
             $layananPatens = LayananPaten::orderBy('nama', 'asc')->get(); // Mengambil semua layanan paten
             $identitasWebsites = IdentitasWebsite::first(); // Mengambil data identitas website
             $weblinks = Weblink::first();
-
+            $socialMediaLinks = SocialMediaLink::all();
             // Statistik Pengunjung
             $today = Carbon::today();
             $yesterday = Carbon::yesterday();
@@ -106,7 +107,8 @@ class AppServiceProvider extends ServiceProvider
                  ->with('layananDukcapils', $layananDukcapils)
                  ->with('layananPatens', $layananPatens)
                  ->with('identitasWebsites', $identitasWebsites)
-                 ->with('weblinks', $weblinks);
+                 ->with('weblinks', $weblinks)
+                 ->with('socialMediaLinks', $socialMediaLinks);
         });
     }
 }
