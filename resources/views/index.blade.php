@@ -439,7 +439,7 @@
         </div><!--end container-->
     </section><!--end section-->
     <!-- Floating WhatsApp Button -->
-    <div id="whatsapp-chat-widget">
+    {{-- <div id="whatsapp-chat-widget">
         <div id="whatsapp-icon" onclick="toggleChatWidget()">
             <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp Icon">
         </div>
@@ -467,7 +467,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Floating Instagram Button -->
     {{-- <div id="instagram-floating-button">

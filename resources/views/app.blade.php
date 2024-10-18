@@ -323,22 +323,6 @@
 
         /* Responsive styles */
         @media (max-width: 991px) {
-            #navigation {
-                position: fixed;
-                top: 60px;
-                /* Sesuaikan dengan tinggi navbar */
-                left: 0;
-                right: 0;
-                background-color: #ffffff;
-                max-height: calc(100vh - 60px);
-                overflow-y: auto;
-                display: none;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            }
-
-            #navigation.show {
-                display: block;
-            }
 
             body {
                 padding-top: 60px;
@@ -402,6 +386,174 @@
             height: 30px;
         }
     </style>
+
+    <!-- Tambahkan ini di bagian <head> untuk memuat Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Widget multi menu sosial-media -->
+    <div class="floating-social-menu">
+        <button class="main-button">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <ul class="social-icons">
+            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" class="instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#" class="youtube"><i class="fab fa-youtube"></i></a></li>
+            <li><a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a></li>
+        </ul>
+    </div>
+
+    <style>
+        .floating-social-menu {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .main-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .main-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1) rotate(360deg);
+        }
+
+        .social-icons {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .social-icons li {
+            margin-bottom: 15px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .facebook {
+            background-color: #3b5998;
+        }
+
+        .twitter {
+            background-color: #1da1f2;
+        }
+
+        .instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+
+        .youtube {
+            background-color: #ff0000;
+        }
+
+        .whatsapp {
+            background-color: #25d366;
+        }
+
+        .floating-social-menu.active .social-icons {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .floating-social-menu.active .social-icons li {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(5) {
+            transition-delay: 0.5s;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+            }
+        }
+
+        .floating-social-menu:not(.active) .main-button {
+            animation: pulse 2s infinite;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingMenu = document.querySelector('.floating-social-menu');
+            const mainButton = floatingMenu.querySelector('.main-button');
+
+            mainButton.addEventListener('click', function() {
+                floatingMenu.classList.toggle('active');
+                this.classList.toggle('rotate');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!floatingMenu.contains(event.target) && floatingMenu.classList.contains('active')) {
+                    floatingMenu.classList.remove('active');
+                    mainButton.classList.remove('rotate');
+                }
+            });
+        });
+    </script>
     @yield('og-tags')
 </head>
 
@@ -417,6 +569,9 @@
         </div>
     </div> --}}
     <!-- Loader -->
+
+    <!-- Widget multi menu sosial-media -->
+
 
     <!-- Navbar STart -->
     @include('header')
@@ -460,7 +615,7 @@
 
 
 
-    <script>
+    {{-- <script>
         function toggleMenu() {
             var navigation = document.getElementById('navigation');
             navigation.classList.toggle('show');
@@ -486,7 +641,7 @@
                 navigation.style.display = 'none';
             }
         });
-    </script>
+    </script> --}}
 
 </body>
 

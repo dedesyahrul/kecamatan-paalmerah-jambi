@@ -53,18 +53,16 @@
         </div><!--end container-->
 </footer><!--end footer-->
 <footer class="footer footer-bar">
-    <div class="container text-center">
-        <div class="row align-items-center">
-            <div class="col-sm-6">
-                <div class="text-sm-start">
-                    <p class="mb-0">© 2021 Kecamatan Paal Merah, Kota Jambi. Developer by <a href="/"
-                            target="_blank" class="text-reset">Dede Syahrul Muadhom</a>.
-                    </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <p class="mb-0">© {{ $identitasWebsites->title_bottom }}</p>
                 </div>
-            </div><!--end col-->
-        </div><!--end row-->
-    </div><!--end container-->
-</footer><!--end footer-->
+            </div>
+        </div>
+    </div>
+</footer>
 
 <a href="#" onclick="topFunction()" id="back-to-top" class="btn btn-icon btn-primary back-to-top"><i
         data-feather="arrow-up" class="icons"></i></a>
