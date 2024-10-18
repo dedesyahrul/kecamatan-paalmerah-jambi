@@ -178,6 +178,155 @@
             }
         }
     </style>
+
+    <!-- Tambahkan ini di bagian <head> untuk memuat Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .floating-social-menu {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .main-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .main-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .social-icons {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .social-icons li {
+            margin-bottom: 15px;
+            transform: translateY(20px) scale(0.5);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2) translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .facebook {
+            background-color: #3b5998;
+        }
+
+        .twitter {
+            background-color: #1da1f2;
+        }
+
+        .instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+
+        .youtube {
+            background-color: #ff0000;
+        }
+
+        .whatsapp {
+            background-color: #25d366;
+        }
+
+        .floating-social-menu.active .social-icons {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .floating-social-menu.active .social-icons li {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(1) {
+            animation: fadeInScale 0.3s 0.1s forwards;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(2) {
+            animation: fadeInScale 0.3s 0.2s forwards;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(3) {
+            animation: fadeInScale 0.3s 0.3s forwards;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(4) {
+            animation: fadeInScale 0.3s 0.4s forwards;
+        }
+
+        .floating-social-menu.active .social-icons li:nth-child(5) {
+            animation: fadeInScale 0.3s 0.5s forwards;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+            }
+        }
+
+        .floating-social-menu:not(.active) .main-button {
+            animation: pulse 2s infinite;
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -192,8 +341,33 @@
         </div> -->
     <!-- Loader -->
 
+    <!-- Widget multi menu sosial-media -->
+    <div class="floating-social-menu">
+        <button class="main-button">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <ul class="social-icons">
+            @foreach ($socialMediaLinks as $socialMedia)
+                <li>
+                    @php
+                        $href = $socialMedia->link;
+                        if ($socialMedia->platform === 'whatsapp') {
+                            $cleanNumber = preg_replace('/[^0-9]/', '', $socialMedia->link);
+                            $href = "https://wa.me/{$cleanNumber}";
+                        }
+                    @endphp
+                    <a href="{{ $href }}" target="_blank" rel="noopener noreferrer"
+                        class="{{ $socialMedia->platform }}">
+                        <i class="fab fa-{{ $socialMedia->platform }}"></i>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <!-- end Widget multi menu sosial-media -->
+
     <!-- Floating WhatsApp Button -->
-    <div id="whatsapp-chat-widget">
+    {{-- <div id="whatsapp-chat-widget">
         <div id="whatsapp-icon" onclick="toggleChatWidget()">
             <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp Icon">
         </div>
@@ -221,7 +395,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Navbar STart -->
     @include('layouts.header')
@@ -249,6 +423,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const floatingMenu = document.querySelector('.floating-social-menu');
+            const mainButton = floatingMenu.querySelector('.main-button');
+
+            mainButton.addEventListener('click', function() {
+                floatingMenu.classList.toggle('active');
+                this.classList.toggle('rotate');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!floatingMenu.contains(event.target) && floatingMenu.classList.contains('active')) {
+                    floatingMenu.classList.remove('active');
+                    mainButton.classList.remove('rotate');
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             var iframes = document.querySelectorAll('.tinymce-content iframe');
             iframes.forEach(function(iframe) {
                 var wrapper = document.createElement('div');
@@ -261,7 +455,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         function toggleChatWidget() {
             var chatPopup = document.getElementById("whatsapp-chat-popup");
             if (chatPopup.style.display === "none" || chatPopup.style.display === "") {
@@ -270,7 +464,7 @@
                 chatPopup.style.display = "none";
             }
         }
-    </script>
+    </script> --}}
 
     <script>
         // Fungsi untuk reload halaman setelah waktu tertentu (300000 ms = 5 menit)

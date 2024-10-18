@@ -390,29 +390,7 @@
     <!-- Tambahkan ini di bagian <head> untuk memuat Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Widget multi menu sosial-media -->
-    <div class="floating-social-menu">
-        <button class="main-button">
-            <i class="fas fa-share-alt"></i>
-        </button>
-        <ul class="social-icons">
-            @foreach ($socialMediaLinks as $socialMedia)
-                <li>
-                    @php
-                        $href = $socialMedia->link;
-                        if ($socialMedia->platform === 'whatsapp') {
-                            $cleanNumber = preg_replace('/[^0-9]/', '', $socialMedia->link);
-                            $href = "https://wa.me/{$cleanNumber}";
-                        }
-                    @endphp
-                    <a href="{{ $href }}" target="_blank" rel="noopener noreferrer"
-                        class="{{ $socialMedia->platform }}">
-                        <i class="fab fa-{{ $socialMedia->platform }}"></i>
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </div>
+
 
     <style>
         .floating-social-menu {
@@ -558,24 +536,6 @@
         }
     </style>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const floatingMenu = document.querySelector('.floating-social-menu');
-            const mainButton = floatingMenu.querySelector('.main-button');
-
-            mainButton.addEventListener('click', function() {
-                floatingMenu.classList.toggle('active');
-                this.classList.toggle('rotate');
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!floatingMenu.contains(event.target) && floatingMenu.classList.contains('active')) {
-                    floatingMenu.classList.remove('active');
-                    mainButton.classList.remove('rotate');
-                }
-            });
-        });
-    </script>
     @yield('og-tags')
 </head>
 
@@ -593,6 +553,29 @@
     <!-- Loader -->
 
     <!-- Widget multi menu sosial-media -->
+    <div class="floating-social-menu">
+        <button class="main-button">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <ul class="social-icons">
+            @foreach ($socialMediaLinks as $socialMedia)
+                <li>
+                    @php
+                        $href = $socialMedia->link;
+                        if ($socialMedia->platform === 'whatsapp') {
+                            $cleanNumber = preg_replace('/[^0-9]/', '', $socialMedia->link);
+                            $href = "https://wa.me/{$cleanNumber}";
+                        }
+                    @endphp
+                    <a href="{{ $href }}" target="_blank" rel="noopener noreferrer"
+                        class="{{ $socialMedia->platform }}">
+                        <i class="fab fa-{{ $socialMedia->platform }}"></i>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    <!-- end Widget multi menu sosial-media -->
 
 
     <!-- Navbar STart -->
@@ -631,6 +614,25 @@
             loadingLine.addEventListener('animationiteration', nextSlide);
 
             carousel.addEventListener('slide.bs.carousel', resetLoadingLine);
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingMenu = document.querySelector('.floating-social-menu');
+            const mainButton = floatingMenu.querySelector('.main-button');
+
+            mainButton.addEventListener('click', function() {
+                floatingMenu.classList.toggle('active');
+                this.classList.toggle('rotate');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!floatingMenu.contains(event.target) && floatingMenu.classList.contains('active')) {
+                    floatingMenu.classList.remove('active');
+                    mainButton.classList.remove('rotate');
+                }
+            });
         });
     </script>
 
