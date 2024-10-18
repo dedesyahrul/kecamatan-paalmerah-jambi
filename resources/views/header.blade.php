@@ -34,7 +34,7 @@
     </div><!--end container-->
 </header><!--end header-->
 
-<style>
+{{-- <style>
     @media (max-width: 991px) {
         #navigation {
             display: none;
@@ -55,7 +55,7 @@
         }
 
     }
-</style>
+</style> --}}
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
