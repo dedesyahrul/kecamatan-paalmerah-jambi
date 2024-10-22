@@ -7,6 +7,7 @@ use App\KategoriBerita;
 use App\GaleriFoto;
 use App\DetailAplikasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BeritaController extends Controller
 {
@@ -64,25 +65,40 @@ class BeritaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug, $token)
     {
-        $berita = Berita::find($id);
+        $berita = Berita::where('slug', $slug)->firstOrFail();
+        
+        // Verifikasi token
+        if ($token !== $berita->token) {
+            abort(403, 'Token tidak valid.');
+        }
+        
+        // Tidak perlu generate token baru, hapus baris-baris berikut:
+        // $berita->token = Str::random(32);
+        // $berita->save();
+        
         $beritas = Berita::all(); // Mengambil semua berita untuk slider
         $banner_standings = BannerStanding::all();
         $detailAplikasi = DetailAplikasi::first();
         $fotos = GaleriFoto::orderBy('created_at', 'desc')->take(3)->get();
+        
         $berita->tambahDibaca();
-        return view('frontend.berita.berita-detail',
-         compact('berita', 'beritas',
-         'banner_standings','fotos','detailAplikasi'));
+        
+        return view('frontend.berita.berita-detail', compact(
+            'berita',
+            'beritas',
+            'banner_standings',
+            'fotos',
+            'detailAplikasi'
+        ));
     }
-    // public function show($id)
-    // {
-    //     $berita = Berita::findOrFail($id);
-    //     $perPage = 2;
-    //     $beritas = Berita::paginate($perPage);
-    //     return view('frontend.berita.berita-detail', compact('berita','beritas'));
-    // }
+
+    // Tambahkan method ini untuk menghasilkan URL berita dengan token terbaru
+    public function getBeritaUrl($berita)
+    {
+        return route('berita.show', ['id' => $berita->id, 'token' => $berita->token]);
+    }
 
     /**
      * Show the form for editing the specified resource.

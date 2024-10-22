@@ -84,8 +84,8 @@
                         <div class="content mt-3">
                             {!! $berita->isi_berita !!}
                         </div>
-                        <p><strong>Penulis:</strong> {{ $berita->penulis }}</p>
-                        <p><strong>Editor:</strong> {{ $berita->editor }}</p>
+                        <p><strong>Penulis:</strong> {{ $berita->penulis ? $berita->penulis : 'Admin' }}</p>
+                        <p><strong>Editor:</strong> {{ $berita->editor ? $berita->editor : 'Admin' }}</p>
                         <p><strong>Sumber:</strong> {{ $berita->sumber }}</p>
 
                         @if ($berita->youtube)

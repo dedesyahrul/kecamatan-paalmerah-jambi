@@ -15,16 +15,19 @@
         </div>
         <div class="news-card__content">
             <h3 class="news-card__title">
-                <a href="{{ route('berita.show', $berita->id) }}">{{ Str::limit($berita->judul, 70) }}</a>
+                <a
+                    href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}">{{ Str::limit($berita->judul, 70) }}</a>
             </h3>
             <p class="news-card__headline">{{ Str::limit($berita->headline, 100) }}</p>
             <p class="news-card__excerpt">{{ Str::limit(strip_tags($berita->isi_berita), 150) }}</p>
             <div class="news-card__meta">
-                <span class="news-card__author"><i class="fas fa-user-circle"></i> {{ $berita->penulis }}</span>
+                <span class="news-card__author"><i class="fas fa-user-circle"></i>
+                    {{ $berita->penulis ? $berita->penulis : 'Admin' }}</span>
                 <span class="news-card__date"><i class="fas fa-calendar-alt"></i>
                     {{ \Carbon\Carbon::parse($berita->created_at)->translatedFormat('d M Y') }}</span>
             </div>
-            <a href="{{ route('berita.show', $berita->id) }}" class="news-card__read-more">
+            <a href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}"
+                class="news-card__read-more">
                 Baca selengkapnya <i class="fas fa-long-arrow-alt-right"></i>
             </a>
         </div>

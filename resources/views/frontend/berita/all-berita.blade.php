@@ -47,13 +47,13 @@
                                     <div class="col-md-6 order-2 order-md-1">
                                         <div class="card-body content">
                                             <h5>
-                                                <a href="{{ route('berita.show', $berita->id) }}"
+                                                <a href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}"
                                                     class="card-title title text-dark">{{ Str::limit($berita->judul, 30, '...') }}</a>
                                             </h5>
                                             <p class="text-muted mb-0">{{ Str::limit(strip_tags($berita->isi_berita), 20) }}
                                             </p>
                                             <div class="post-meta d-flex justify-content-between mt-3">
-                                                <a href="{{ route('berita.show', $berita->id) }}"
+                                                <a href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}"
                                                     class="text-muted readmore">Selengkapnya <i
                                                         class="uil uil-angle-right-b align-middle"></i></a>
                                             </div>

@@ -119,7 +119,8 @@ Route::get('/surat-edaran/download/{id}/{fileName}', [SuratEdaranController::cla
 
 Route::get('/all-berita', [BeritaController::class, 'allBerita'])->name('berita.all');
 Route::get('/berita/{kategori_id}', [BeritaController::class, 'index'])->name('berita.index');
-Route::get('/kategori/{id}', [BeritaController::class, 'show'])->name('berita.show');
+// Route::get('/berita-detail/{id}', [BeritaController::class, 'show'])->name('berita.show');
+Route::get('/berita/{slug}/{token}', [BeritaController::class, 'show'])->name('berita.show');
 
 
 Route::get('/galeri/foto', [GaleriController::class, 'indexFoto'])->name('indexFoto');

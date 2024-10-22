@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -12,9 +12,6 @@ class Berita extends Model
     protected $fillable = [
         // ... daftar kolom yang bisa diisi secara massal
         'token',
-        'judul',
-        'slug',
-        // ... tambahkan kolom lain yang diperlukan
     ];
 
     protected static function boot()
@@ -22,20 +19,8 @@ class Berita extends Model
         parent::boot();
 
         static::creating(function ($berita) {
-            if (!$berita->token) {
-                $berita->token = Str::random(32);
-            }
-            if (!$berita->slug) {
-                $berita->slug = Str::slug($berita->judul);
-            }
+            $berita->token = Str::random(32);
         });
-
-        // Hapus atau komentari bagian updating jika Anda tidak ingin token berubah saat update
-        // static::updating(function ($berita) {
-        //     if (!$berita->token) {
-        //         $berita->token = Str::random(32);
-        //     }
-        // });
     }
 
     public function kategori()
@@ -63,16 +48,5 @@ class Berita extends Model
         $this->token = Str::random(32);
         $this->save();
         return $this->token;
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
-
-    public function setJudulAttribute($value)
-    {
-        $this->attributes['judul'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
     }
 }

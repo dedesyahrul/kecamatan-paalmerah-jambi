@@ -41,13 +41,15 @@
                     @foreach ($recentPosts as $berita)
                         <div class="clearfix post-recent">
                             <div class="post-recent-thumb float-start">
-                                <a href="{{ route('berita.show', $berita->id) }}">
+                                <a
+                                    href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}">
                                     <img alt="img" src="{{ asset('storage/' . $berita->foto) }}"
                                         class="img-fluid rounded">
                                 </a>
                             </div>
                             <div class="post-recent-content float-start">
-                                <a href="{{ route('berita.show', $berita->id) }}">
+                                <a
+                                    href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}">
                                     {{ $berita->judul }}
                                 </a>
                                 <span class="text-muted mt-2">
