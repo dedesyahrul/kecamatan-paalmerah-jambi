@@ -73,8 +73,10 @@
                     <a href="javascript:void(0)">{{ $kelurahan->nama }}</a>
                     <span class="submenu-arrow"></span>
                     <ul class="submenu scrollable-submenu">
-                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/profil') }}"
-                                class="sub-menu-item">Profil</a></li>
+                        {{-- <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/profil') }}"
+                                class="sub-menu-item">Profil</a></li> --}}
+                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-rt') }}"
+                                class="sub-menu-item">Data RT</a></li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-penduduk') }}"
                                 class="sub-menu-item">Data Penduduk</a>
                         </li>
@@ -85,8 +87,11 @@
                         </li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/pkh') }}"
                                 class="sub-menu-item">PKH</a></li>
-                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/inovasi') }}"
-                                class="sub-menu-item">Inovasi</a></li>
+                        {{-- <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/inovasi') }}"
+                                class="sub-menu-item">Inovasi</a></li> --}}
+
+                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-pengangguran') }}"
+                                class="sub-menu-item">Data Warga Pengangguran</a></li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-kampung-bantar') }}"
                                 class="sub-menu-item">Data Kampung
                                 Bantar</a></li>
@@ -119,6 +124,8 @@
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-stunting') }}"
                                 class="sub-menu-item">Data Stunting</a>
                         </li>
+
+
                     </ul>
                 </li>
             @endforeach
