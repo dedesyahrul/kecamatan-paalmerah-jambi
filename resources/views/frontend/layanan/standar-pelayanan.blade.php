@@ -70,9 +70,10 @@
                                         {!! $standarPelayanan->isi !!}
                                     </div>
 
-
-                                    <img src="{{ asset('storage/' . $standarPelayanan->foto) }}"
-                                        class="img-fluid rounded-md shadow mb-4" alt="">
+                                    @if ($standarPelayanan->foto && Storage::disk('public')->exists($standarPelayanan->foto))
+                                        <img src="{{ asset('storage/' . $standarPelayanan->foto) }}"
+                                            class="img-fluid rounded-md shadow mb-4" alt="Standar Pelayanan">
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

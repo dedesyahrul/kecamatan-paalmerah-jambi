@@ -72,7 +72,7 @@
                 <li class="has-submenu">
                     <a href="javascript:void(0)">{{ $kelurahan->nama }}</a>
                     <span class="submenu-arrow"></span>
-                    <ul class="submenu">
+                    <ul class="submenu scrollable-submenu">
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/profil') }}"
                                 class="sub-menu-item">Profil</a></li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-penduduk') }}"
@@ -217,3 +217,37 @@
         </ul>
     </li>
 </ul><!--end navigation menu-->
+
+<style>
+    .scrollable-submenu {
+        max-height: 300px;
+        /* Sesuaikan tinggi maksimum sesuai kebutuhan */
+        overflow-y: auto;
+        scrollbar-width: thin;
+        /* Untuk Firefox */
+        scrollbar-color: #888 #f1f1f1;
+        /* Untuk Firefox */
+    }
+
+    /* Untuk WebKit browsers (Chrome, Safari) */
+    .scrollable-submenu::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .scrollable-submenu::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .scrollable-submenu::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    .scrollable-submenu::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    /* Pastikan submenu tetap terbuka saat di-scroll */
+    .has-submenu:hover .scrollable-submenu {
+        display: block;
+    }
+</style>

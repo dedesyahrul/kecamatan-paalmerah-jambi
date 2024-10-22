@@ -77,6 +77,8 @@ Route::get('/kelurahan/{slug}/data-objek-wisata', [KelurahanController::class, '
 Route::get('/kelurahan/{slug}/poskamling', [KelurahanController::class, 'poskamling'])->name('kelurahan.data-poskamling');
 Route::get('/kelurahan/{slug}/data-lansia', [KelurahanController::class, 'dataLansia'])->name('kelurahan.data-lansia');
 Route::get('/kelurahan/{slug}/data-stunting', [KelurahanController::class, 'dataStunting'])->name('kelurahan.data-stunting');
+Route::get('/kelurahan/{slug}/data-rt', [KelurahanController::class, 'dataRt'])->name('kelurahan.data-rt');
+Route::get('/kelurahan/{slug}/data-pengangguran', [KelurahanController::class, 'dataPengangguran'])->name('kelurahan.data-pengangguran');
 
 
 Route::get('/undang-undang', [UndangundangController::class, 'index']);
