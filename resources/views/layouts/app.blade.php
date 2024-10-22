@@ -29,25 +29,72 @@
     <style>
         .tinymce-content {
             max-width: 100%;
-            overflow-x: auto;
+            overflow-x: hidden;
         }
 
         .tinymce-content img,
-        .tinymce-content iframe,
-        .tinymce-content table {
+        .tinymce-content iframe {
             max-width: 100%;
             height: auto;
+            display: block;
+            margin: 1rem auto;
         }
 
         .tinymce-content table {
-            display: block;
+            width: 100% !important;
+            max-width: 100%;
+            margin-bottom: 1rem;
+            border-collapse: collapse;
             overflow-x: auto;
-            white-space: nowrap;
+            display: block;
+        }
+
+        .tinymce-content table td,
+        .tinymce-content table th {
+            padding: 0.5rem;
+            vertical-align: top;
+            border: 1px solid #dee2e6;
+            word-wrap: break-word;
+            min-width: 100px;
+            /* Menetapkan lebar minimum untuk sel */
+        }
+
+        .tinymce-content p,
+        .tinymce-content ul,
+        .tinymce-content ol {
+            max-width: 100%;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         @media (max-width: 768px) {
+            .tinymce-content {
+                font-size: 16px;
+            }
+
             .tinymce-content table {
                 font-size: 14px;
+            }
+
+            .tinymce-content table td,
+            .tinymce-content table th {
+                padding: 0.3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .tinymce-content {
+                font-size: 14px;
+            }
+
+            .tinymce-content table {
+                white-space: nowrap;
+            }
+
+            .tinymce-content img,
+            .tinymce-content iframe {
+                max-width: 100%;
+                height: auto;
             }
         }
     </style>
