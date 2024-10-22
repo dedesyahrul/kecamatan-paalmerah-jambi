@@ -10,11 +10,10 @@ class Berita extends Model
     protected $table = 'beritas';
 
     protected $fillable = [
-        // ... daftar kolom yang bisa diisi secara massal
-        'token',
         'judul',
         'slug',
         // ... tambahkan kolom lain yang diperlukan
+        // Hapus 'token' dari sini jika Anda tidak ingin memungkinkan pengisian massal
     ];
 
     protected static function boot()
@@ -22,20 +21,9 @@ class Berita extends Model
         parent::boot();
 
         static::creating(function ($berita) {
-            if (!$berita->token) {
-                $berita->token = Str::random(32);
-            }
-            if (!$berita->slug) {
-                $berita->slug = Str::slug($berita->judul);
-            }
+            $berita->token = Str::random(32); // Selalu buat token baru
+            $berita->slug = Str::slug($berita->judul); // Selalu buat slug baru
         });
-
-        // Hapus atau komentari bagian updating jika Anda tidak ingin token berubah saat update
-        // static::updating(function ($berita) {
-        //     if (!$berita->token) {
-        //         $berita->token = Str::random(32);
-        //     }
-        // });
     }
 
     public function kategori()
@@ -47,15 +35,6 @@ class Berita extends Model
     {
         $this->dibaca++;
         $this->save();
-    }
-
-    public function getTokenAttribute($value)
-    {
-        if (!$value) {
-            $this->token = Str::random(32);
-            $this->save();
-        }
-        return $this->attributes['token'];
     }
 
     public function refreshToken()
