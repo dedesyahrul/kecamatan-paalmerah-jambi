@@ -21,6 +21,8 @@ use App\DataLansiaKelurahan;
 use App\DataStuntingKelurahan;
 use App\DataRt;
 use App\DataPengangguran;
+use App\DataPbbKelurahan;
+use App\DataPerumahan;
 
 
 
@@ -235,6 +237,20 @@ class KelurahanController extends Controller
         // Ambil data_rt berdasarkan kelurahan_id dari kelurahan yang ditemukan
         $dataRt = DataRt::where('kelurahan_id', $kelurahan->id)->firstOrFail();
         return view('frontend.kelurahan.data-rt', compact('kelurahan', 'dataRt'));
+    }
+
+    public function dataPerumahan($slug)
+    {
+        $kelurahan = Kelurahan::where('slug', $slug)->firstOrFail();
+        $dataPerumahan = DataPerumahan::where('kelurahan_id', $kelurahan->id)->firstOrFail();
+        return view('frontend.kelurahan.data-perumahan', compact('kelurahan', 'dataPerumahan'));
+    }
+
+    public function dataPbb($slug)
+    {
+        $kelurahan = Kelurahan::where('slug', $slug)->firstOrFail();
+        $dataPbb = DataPbbKelurahan::where('kelurahan_id', $kelurahan->id)->firstOrFail();
+        return view('frontend.kelurahan.data-pbb', compact('kelurahan', 'dataPbb'));
     }
 }
 

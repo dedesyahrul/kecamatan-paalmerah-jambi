@@ -82,9 +82,14 @@
                         </li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/struktur') }}"
                                 class="sub-menu-item">Struktur</a></li>
-                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-guru-pami') }}"
+                        {{-- <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-guru-pami') }}"
                                 class="sub-menu-item">Data Guru Pami</a>
-                        </li>
+                        </li> --}}
+
+                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-pbb') }}"
+                                class="sub-menu-item">PBB</a></li>
+
+
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/pkh') }}"
                                 class="sub-menu-item">PKH</a></li>
                         {{-- <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/inovasi') }}"
@@ -114,9 +119,12 @@
                                 Gas 3kg</a></li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-tps') }}"
                                 class="sub-menu-item">Data TPS</a></li>
-                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-objek-wisata') }}"
+                        {{-- <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-objek-wisata') }}"
                                 class="sub-menu-item">Data Objek
-                                Wisata</a></li>
+                                Wisata</a></li> --}}
+
+                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-perumahan') }}"
+                                class="sub-menu-item">Data Perumahan</a></li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/poskamling') }}"
                                 class="sub-menu-item">Poskamling</a></li>
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-lansia') }}"
@@ -124,6 +132,7 @@
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-stunting') }}"
                                 class="sub-menu-item">Data Stunting</a>
                         </li>
+
 
 
                     </ul>

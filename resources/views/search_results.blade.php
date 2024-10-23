@@ -60,17 +60,18 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title mb-2">
-                                                <a href="{{ route('berita.show', $berita->id) }}"
+                                                <a href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}"
                                                     class="text-dark text-decoration-none">
                                                     {{ Str::limit($berita->judul, 60) }}
                                                 </a>
+
                                             </h5>
                                             <p class="card-text text-muted small mb-2">
                                                 <i class="fas fa-calendar-alt me-2"></i>
                                                 {{ \Carbon\Carbon::parse($berita->created_at)->translatedFormat('d F Y') }}
                                             </p>
                                             <p class="card-text">{{ Str::limit(strip_tags($berita->isi_berita), 100) }}</p>
-                                            <a href="{{ route('berita.show', $berita->id) }}"
+                                            <a href="{{ route('berita.show', ['slug' => $berita->slug, 'token' => $berita->token]) }}"
                                                 class="btn btn-sm btn-outline-primary">
                                                 Baca Selengkapnya
                                             </a>
