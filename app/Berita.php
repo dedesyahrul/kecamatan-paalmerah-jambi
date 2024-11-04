@@ -22,7 +22,21 @@ class Berita extends Model
 
         static::creating(function ($berita) {
             $berita->token = Str::random(32); // Selalu buat token baru
-            $berita->slug = Str::slug($berita->judul); // Selalu buat slug baru
+            if (!empty($berita->judul)) {
+                $berita->slug = Str::slug($berita->judul);
+            } else {
+                $berita->slug = $berita->token;
+            }
+        });
+
+        static::updating(function ($berita) {
+            if ($berita->isDirty('judul')) {
+                if (!empty($berita->judul)) {
+                    $berita->slug = Str::slug($berita->judul);
+                } else {
+                    $berita->slug = $berita->token;
+                }
+            }
         });
     }
 

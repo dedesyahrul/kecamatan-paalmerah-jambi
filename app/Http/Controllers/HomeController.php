@@ -27,33 +27,34 @@ class HomeController extends Controller
     public function index()
     {
         $sliders = Slider::all();
-        $beritas = Berita::orderBy('created_at', 'desc')->paginate(5);
+        $beritas = Berita::orderByRaw('COALESCE(created_at, updated_at) DESC')->paginate(5);
         $banner_standings = BannerStanding::all();
-        $banners = Banner::orderBy('created_at', 'desc')->get();
+        $banners = Banner::orderByRaw('COALESCE(created_at, updated_at) DESC')->get();
         $sekre = Bidangsekre::all();
         $b_egov = BidangEgov::all();
         $infokom = BidangInfokom::all();
-        $fotos = GaleriFoto::orderBy('created_at', 'desc')->take(3)->get();
+        $fotos = GaleriFoto::orderByRaw('COALESCE(created_at, updated_at) DESC')->take(3)->get();
         $detailAplikasi = DetailAplikasi::first();
         $agendas = Agenda::orderBy('tanggal', 'desc')->get();
         $aplikasi_terkait = AplikasiTerkait::all();
         $kataSambutans = KataSambutan::all();
         $kategoriBeritas = KategoriBerita::pluck('nama_kategori', 'id')->all();
-        return view('index',
-        ['sliders' => $sliders,
-        'beritas' => $beritas,
-        'banner_standings' => $banner_standings,
-        'banners' => $banners,
-        'sekre' => $sekre,
-        'b_egov' => $b_egov,
-        'infokom' => $infokom,
-        'fotos' =>$fotos,
-        'detailAplikasi' =>$detailAplikasi,
-        'agendas' =>$agendas,
-        'aplikasi_terkait' =>$aplikasi_terkait,
-        'kataSambutans' => $kataSambutans,
-        'kategoriBeritas' => $kategoriBeritas
-        ]);
+
+        return view('index', compact(
+            'sliders',
+            'beritas',
+            'banner_standings',
+            'banners',
+            'sekre',
+            'b_egov',
+            'infokom',
+            'fotos',
+            'detailAplikasi',
+            'agendas',
+            'aplikasi_terkait',
+            'kataSambutans',
+            'kategoriBeritas'
+        ));
     }
 
     public function showSekre($id)
