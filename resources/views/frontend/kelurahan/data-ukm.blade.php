@@ -53,8 +53,10 @@
                             </ul>
                             <hr>
                             <div>
-                                <img src="{{ asset('storage/' . $dataUkm->foto) }}" class="img-fluid rounded-md shadow mb-4"
-                                    alt="">
+                                @if ($dataUkm->foto && Storage::disk('public')->exists($dataUkm->foto))
+                                    <img src="{{ asset('storage/' . $dataUkm->foto) }}"
+                                        class="img-fluid rounded-md shadow mb-4" alt="Foto UKM">
+                                @endif
                                 <small>{{ $dataUkm->text_foto }}</small>
                                 <div class="tinymce-content">
                                     {!! $dataUkm->isi !!}
