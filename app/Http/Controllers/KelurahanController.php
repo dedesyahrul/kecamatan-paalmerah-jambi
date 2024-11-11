@@ -23,6 +23,7 @@ use App\DataRt;
 use App\DataPengangguran;
 use App\DataPbbKelurahan;
 use App\DataPerumahan;
+use App\UkmKelurahan;
 
 
 
@@ -251,6 +252,13 @@ class KelurahanController extends Controller
         $kelurahan = Kelurahan::where('slug', $slug)->firstOrFail();
         $dataPbb = DataPbbKelurahan::where('kelurahan_id', $kelurahan->id)->firstOrFail();
         return view('frontend.kelurahan.data-pbb', compact('kelurahan', 'dataPbb'));
+    }
+
+    public function dataUkm($slug)
+    {
+        $kelurahan = Kelurahan::where('slug', $slug)->firstOrFail();
+        $dataUkm = UkmKelurahan::where('kelurahan_id', $kelurahan->id)->firstOrFail();
+        return view('frontend.kelurahan.data-ukm', compact('kelurahan', 'dataUkm'));
     }
 }
 

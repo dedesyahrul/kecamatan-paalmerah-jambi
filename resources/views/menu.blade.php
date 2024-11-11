@@ -132,6 +132,9 @@
                         <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-stunting') }}"
                                 class="sub-menu-item">Data Stunting</a>
                         </li>
+                        <li><a href="{{ url('/kelurahan/' . $kelurahan->slug . '/data-ukm') }}"
+                                class="sub-menu-item">Data UKM</a>
+                        </li>
 
 
 
