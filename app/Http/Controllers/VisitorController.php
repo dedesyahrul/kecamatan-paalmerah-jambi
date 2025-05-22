@@ -11,24 +11,7 @@ class VisitorController extends Controller
 {
     public function index(Request $request)
     {
-        // Handle visitor increment for both GET and POST
         $today = Carbon::today()->toDateString();
-        $ipAddress = $request->ip();
-
-        // Cek apakah IP address ini sudah tercatat hari ini
-        $visitor = Visitor::where('date', $today)
-                         ->where('ip_address', $ipAddress)
-                         ->first();
-
-        if (!$visitor && $request->method() === 'POST') {
-            // Jika POST request dan belum ada catatan, buat catatan baru
-            Visitor::create([
-                'date' => $today,
-                'ip_address' => $ipAddress,
-                'count' => 1
-            ]);
-        }
-
         $yesterday = Carbon::yesterday()->toDateString();
         $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
 
