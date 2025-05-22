@@ -3,6 +3,18 @@
 
 <head>
     <meta charset="utf-8" />
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy"
+        content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()">
+
+    <!-- Preconnect to Cloudflare -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
     <title>@yield('title', 'Landrick - Saas & Software Landing Page Template')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ $identitasWebsites->meta_deskripsi }}" />
@@ -25,6 +37,50 @@
     <!-- Main Css -->
     <link href="{{ asset('assets') }}/css/style.css" rel="stylesheet" type="text/css" id="theme-opt" />
     <link href="{{ asset('assets') }}/css/colors/default.css" rel="stylesheet" id="color-opt">
+
+    <!-- Cloudflare Performance Optimizations -->
+    <style>
+        /* Critical CSS untuk loading */
+        .cf-loading {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+
+        .cf-loaded {
+            opacity: 1;
+        }
+
+        /* Lazy loading images */
+        img.lazy {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+
+        img.lazy.loaded {
+            opacity: 1;
+        }
+
+        /* Skeleton loading */
+        .skeleton-loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+    </style>
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="{{ asset('assets/css/bootstrap.min.css') }}" as="style">
+    <link rel="preload" href="{{ asset('assets/js/bootstrap.bundle.min.js') }}" as="script">
 
     <style>
         .tinymce-content {
@@ -532,6 +588,60 @@
     <script src="{{ asset('assets') }}/js/plugins.init.js"></script>
     <!--Note: All init js like tiny slider, counter, countdown, maintenance, lightbox, gallery, swiper slider, aos animation etc.-->
     <script src="{{ asset('assets') }}/js/app.js"></script>
+
+    <!-- Cloudflare Performance Scripts -->
+    <script>
+        // Handle Cloudflare offline mode
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                if (navigator.onLine) {
+                    console.log('Online mode');
+                } else {
+                    console.log('Offline mode');
+                    document.body.innerHTML +=
+                        '<div style="position: fixed; bottom: 0; width: 100%; background-color: #f8d7da; color: #721c24; text-align: center; padding: 10px;">Anda sedang dalam mode offline. Beberapa fitur mungkin tidak tersedia.</div>';
+                }
+            });
+
+            window.addEventListener('online', function() {
+                console.log('Became online');
+                location.reload();
+            });
+
+            window.addEventListener('offline', function() {
+                console.log('Became offline');
+                document.body.innerHTML +=
+                    '<div style="position: fixed; bottom: 0; width: 100%; background-color: #f8d7da; color: #721c24; text-align: center; padding: 10px;">Koneksi terputus. Mencoba menghubungkan kembali...</div>';
+            });
+        }
+
+        // Handle resource loading errors and Cloudflare challenges
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK') {
+                const originalSrc = e.target.src || e.target.href;
+                if (originalSrc && !originalSrc.includes('cdnjs.cloudflare.com')) {
+                    const cfSrc = 'https://cdnjs.cloudflare.com' + originalSrc;
+                    const element = document.createElement(e.target.tagName);
+                    element.src = cfSrc;
+                    element.href = cfSrc;
+                    document.head.appendChild(element);
+                }
+            }
+        }, true);
+
+        // Handle Cloudflare challenges
+        window.addEventListener('load', function() {
+            if (document.getElementById('challenge-form')) {
+                setTimeout(function() {
+                    location.reload();
+                }, 3000);
+            }
+        });
+    </script>
+
+    <!-- Cloudflare Browser Insights -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "your-token"}'>
+    </script>
 </body>
 
 </html>

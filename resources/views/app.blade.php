@@ -3,6 +3,16 @@
 
 <head>
     <meta charset="utf-8" />
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+    <!-- Preconnect to Cloudflare -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
     <title>{{ $identitasWebsites->nama_website }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{{ $identitasWebsites->meta_deskripsi }}" />
@@ -639,33 +649,59 @@
 
 
 
-    {{-- <script>
-        function toggleMenu() {
-            var navigation = document.getElementById('navigation');
-            navigation.classList.toggle('show');
+    {{-- Navigation menu script commented out --}}
+
+    <!-- Cloudflare Offline Handler -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                if (navigator.onLine) {
+                    console.log('Online mode');
+                } else {
+                    console.log('Offline mode');
+                    document.body.innerHTML +=
+                        '<div style="position: fixed; bottom: 0; width: 100%; background-color: #f8d7da; color: #721c24; text-align: center; padding: 10px;">Anda sedang dalam mode offline. Beberapa fitur mungkin tidak tersedia.</div>';
+                }
+            });
+
+            window.addEventListener('online', function() {
+                console.log('Became online');
+                location.reload();
+            });
+
+            window.addEventListener('offline', function() {
+                console.log('Became offline');
+                document.body.innerHTML +=
+                    '<div style="position: fixed; bottom: 0; width: 100%; background-color: #f8d7da; color: #721c24; text-align: center; padding: 10px;">Koneksi terputus. Mencoba menghubungkan kembali...</div>';
+            });
+        }
+    </script>
+
+    <!-- Cloudflare Always Online Fallback -->
+    <script>
+        function addTimeout(src, timeout) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+                setTimeout(reject, timeout);
+            });
         }
 
-        // Menutup menu saat mengklik di luar area menu
-        document.addEventListener('click', function(event) {
-            var navigation = document.getElementById('navigation');
-            var isClickInsideNavigation = navigation.contains(event.target);
-            var isClickInsideToggle = document.getElementById('isToggle').contains(event.target);
-
-            if (!isClickInsideNavigation && !isClickInsideToggle && window.innerWidth <= 991) {
-                navigation.classList.remove('show');
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK') {
+                const originalSrc = e.target.src || e.target.href;
+                if (originalSrc && !originalSrc.includes('cdnjs.cloudflare.com')) {
+                    const cfSrc = 'https://cdnjs.cloudflare.com' + originalSrc;
+                    addTimeout(cfSrc, 5000).catch(() => {
+                        console.log('Failed to load resource from Cloudflare cache');
+                    });
+                }
             }
-        });
-
-        // Menyesuaikan tampilan saat resize window
-        window.addEventListener('resize', function() {
-            var navigation = document.getElementById('navigation');
-            if (window.innerWidth > 991) {
-                navigation.style.display = 'block';
-            } else {
-                navigation.style.display = 'none';
-            }
-        });
-    </script> --}}
+        }, true);
+    </script>
 
 </body>
 
