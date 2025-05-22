@@ -58,7 +58,7 @@ Route::get('/infokom/{id}', [HomeController::class, 'showInfokom'])
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 Route::post('/contact/send', [HomeController::class, 'send'])->name('contact.send');
 
-Route::get('/visitor-statistics', [VisitorController::class, 'index'])->name('visitor.statistics');
+Route::match(['get', 'post'], '/visitor-statistics', [VisitorController::class, 'index'])->name('visitor.statistics');
 
 Route::get('/kelurahan/{slug}/profil', [KelurahanController::class, 'profil'])->name('kelurahan.profil');
 Route::get('/kelurahan/{slug}/data-penduduk', [KelurahanController::class, 'dataPenduduk'])->name('kelurahan.data-penduduk');
