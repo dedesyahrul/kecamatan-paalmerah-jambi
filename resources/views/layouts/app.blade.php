@@ -569,13 +569,82 @@
         }
     </script> --}}
 
+    <!-- Safe Auto-Reload Script -->
     <script>
-        // Fungsi untuk reload halaman setelah waktu tertentu (300000 ms = 5 menit)
-        setTimeout(function() {
-            window.location.reload(); // Reload halaman
-        }, 300000); // 300000 ms = 5 menit
+        // Fungsi untuk reload halaman dengan pengecekan metode dan Cloudflare
+        function safeReload() {
+            // Cek apakah ada form yang sedang disubmit
+            if (sessionStorage.getItem('formSubmitting')) {
+                return;
+            }
+
+            // Cek apakah halaman dalam proses POST
+            if (window.performance && window.performance.navigation.type === 0) {
+                // Simpan URL saat ini
+                const currentUrl = window.location.href;
+
+                // Lakukan request HEAD terlebih dahulu untuk cek Cloudflare
+                fetch(currentUrl, {
+                        method: 'HEAD'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Jika response ok, reload dengan GET
+                            window.location.href = currentUrl;
+                        }
+                    })
+                    .catch(() => {
+                        // Jika error, jangan reload
+                        console.log('Skipping reload due to potential Cloudflare check');
+                    });
+            }
+        }
+
+        // Set interval untuk reload yang aman
+        setInterval(safeReload, 300000); // 5 menit
+
+        // Tambahkan event listener untuk form submissions
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    // Set flag bahwa form sedang disubmit
+                    sessionStorage.setItem('formSubmitting', 'true');
+                    // Clear flag setelah 5 detik (berikan waktu untuk submit)
+                    setTimeout(() => {
+                        sessionStorage.removeItem('formSubmitting');
+                    }, 5000);
+                });
+            });
+        });
+
+        // Handle Cloudflare challenges
+        if (document.getElementById('challenge-form')) {
+            // Jika ada Cloudflare challenge, jangan lakukan auto-reload
+            console.log('Cloudflare challenge detected, disabling auto-reload');
+        }
     </script>
 
+    <!-- Cloudflare Error Handler -->
+    <script>
+        // Tangkap semua error yang mungkin terjadi
+        window.addEventListener('error', function(e) {
+            // Jika error adalah MethodNotAllowedHttpException
+            if (e.message && e.message.includes('MethodNotAllowedHttpException')) {
+                // Redirect ke homepage dengan GET
+                window.location.href = '/';
+                return;
+            }
+        });
+
+        // Tangkap unhandled rejections
+        window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason && e.reason.toString().includes('MethodNotAllowedHttpException')) {
+                window.location.href = '/';
+                return;
+            }
+        });
+    </script>
 
     <script src="{{ asset('assets') }}/js/tobii.min.js"></script>
     <!-- SLIDER -->
