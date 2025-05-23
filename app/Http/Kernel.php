@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
              // Middleware lainnya
             \App\Http\Middleware\TrackVisitors::class,
             \App\Http\Middleware\BlockSpecificRoutes::class,
+            \App\Http\Middleware\BlockUnwantedRequests::class,
         ],
 
         'api' => [

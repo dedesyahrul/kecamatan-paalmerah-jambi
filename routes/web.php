@@ -45,7 +45,7 @@ use App\Http\Controllers\SeksiBagianController;
 //     return view('welcome');
 // });
 // Route::get('/', [HomeController::class, 'welcome']);
-Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::match(['get', 'post'], '/', [HomeController::class, 'index'])->name('index');
 Route::get('/sekre/{id}', [HomeController::class, 'showSekre'])
     ->name('sekre.show')
     ->middleware('encrypt.id');

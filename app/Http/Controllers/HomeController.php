@@ -24,8 +24,14 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // If POST request, redirect to GET
+        if ($request->isMethod('post')) {
+            return redirect()->route('index');
+        }
+
+        // Normal GET request handling
         $sliders = Slider::all();
         $beritas = Berita::orderByRaw('COALESCE(created_at, updated_at) DESC')->paginate(5);
         $banner_standings = BannerStanding::all();
@@ -128,7 +134,7 @@ class HomeController extends Controller
             'phone' => 'required',
             'comments' => 'required',
         ]);
-    
+
         $details = [
             'name' => $request->name,
             'email' => $request->email,
@@ -136,7 +142,7 @@ class HomeController extends Controller
             'subjek' => $request->subjek,
             'comments' => $request->comments,
         ];
-    
+
         try {
             Mail::to('kecamatanpaalmerah123@gmail.com')->send(new ContactMail($details));
             return back()->with('message', 'Pesan Anda berhasil dikirim!');
@@ -144,8 +150,8 @@ class HomeController extends Controller
             \Log::error('Error saat mengirim email: ' . $e->getMessage());
             return back()->with('error', 'Gagal mengirim pesan, silakan coba lagi nanti.');
         }
-    }    
+    }
 
-    
+
 
 }
